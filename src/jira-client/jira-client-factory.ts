@@ -1,4 +1,4 @@
-import { ClientConfig } from "./client-config";
+import { ClientConfig } from "./models/client-config";
 import JiraClient = require("jira-connector");
 
 export const jiraClientFactory = (config: ClientConfig) => {

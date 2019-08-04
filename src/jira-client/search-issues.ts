@@ -1,4 +1,5 @@
 import JiraClient = require("jira-connector");
+import { toJiraDateFormat } from "../utils/date-utils";
 
 export const searchIssues = (
   client: JiraClient,
@@ -15,11 +16,9 @@ export const searchIssues = (
 };
 
 const buildJQL = (from: Date, to: Date, author: string) => {
-  return `worklogAuthor = "${author}"`;
-};
-
-const formatDateForJQL = (date: Date) => {
-  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDay()}`;
+  return `worklogAuthor = "${author}" AND worklogDate >= "${toJiraDateFormat(
+    from
+  )}" AND worklogDate <= "${toJiraDateFormat(to)}"`;
 };
 
 const getMaxInt32 = () => {
