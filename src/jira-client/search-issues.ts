@@ -1,12 +1,13 @@
 import JiraClient = require("jira-connector");
 import { toJiraDateFormat } from "../utils/date-utils";
+import { IssuesResponse } from "./models/issues-response";
 
 export const searchIssues = (
   client: JiraClient,
   from: Date,
   to: Date,
   author: string
-): Promise<any> => {
+): Promise<IssuesResponse> => {
   const jql = buildJQL(from, to, author);
   return client.search.search({
     jql,
