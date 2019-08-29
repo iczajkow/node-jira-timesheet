@@ -1,10 +1,10 @@
-import { Issue } from "./models/issue";
 import JiraClient = require("jira-connector");
 import { IssueWorklog } from "./models/issue-worklog";
 import { Worklog } from "./models/worklog";
+import { IssueResponse } from "./models/issues-response";
 
 export const getIssueWorklogs = (
-  issues: Issue[],
+  issues: IssueResponse[],
   client: JiraClient,
   filter?: (worklog: Worklog) => boolean
 ): Promise<IssueWorklog[]> => {
