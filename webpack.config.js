@@ -1,5 +1,6 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const { NODE_ENV = "production" } = process.env;
 
@@ -9,7 +10,7 @@ module.exports = {
   target: "node",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index.js"
+    filename: "index.ts"
   },
   resolve: {
     extensions: [".ts", ".js"]

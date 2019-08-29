@@ -1,18 +1,38 @@
-import { jiraClientFactory } from "./jira-client/jira-client-factory";
-import { ClientConfig } from "./jira-client/models/client-config";
-import { searchIssues } from "./jira-client/search-issues";
-import { getIssueWorklogs } from "./jira-client/get-issue-worklogs";
-import { groupIssues } from "./jira-client/group-issues";
-import { getWorklogs } from "./jira-client/get-worklogs";
-const config: ClientConfig = require("./appconfig.json");
+import { app, BrowserWindow } from "electron";
 
-(async () => {
-  const result = await getWorklogs({
-    config,
-    jiraClientFactory,
-    searchIssues,
-    getIssueWorklogs,
-    groupIssues
+console.log(app);
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let win: BrowserWindow;
+
+function createWindow() {
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
-  console.log({ result });
-})();
+  win.loadFile("index.html");
+
+  win.webContents.openDevTools();
+
+  win.on("closed", () => {
+    win = null;
+  });
+}
+
+app.on("ready", createWindow);
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
+
+app.on("activate", () => {
+  if (win === null) {
+    createWindow();
+  }
+});
