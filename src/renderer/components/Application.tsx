@@ -5,8 +5,8 @@ import * as React from "react";
 import CounterContainer from "../containers/CounterContainer";
 
 const Application = () => (
-  <div className="test col-3">
-    <Button variant="primary" />
+  <div className="col-3">
+    <Button variant="primary">Test</Button>
   </div>
 );
 
