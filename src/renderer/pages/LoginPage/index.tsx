@@ -1,15 +1,12 @@
 import * as React from "react";
-import Card from "react-bootstrap/Card";
+import "./index.scss";
+import LoginContainer from "../../containers/LoginContainer";
 
 const LoginPage = () => (
   <div className="container">
     <div className="row">
-      <div className="col-9 mx-auto">
-        <Card>
-          <Card.Body>
-            <Card.Title className="text-center">Sign In</Card.Title>
-          </Card.Body>
-        </Card>
+      <div className="col-9 mx-auto login__content">
+        <LoginContainer />
       </div>
     </div>
   </div>

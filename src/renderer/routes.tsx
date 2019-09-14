@@ -4,6 +4,9 @@ import store from "./store";
 import { Route } from "react-router";
 import { HashRouter } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
+import { appReducer } from "./appReducer";
+
+const a = appReducer;
 
 const routes = (
   <Provider store={store}>
