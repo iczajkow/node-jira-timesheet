@@ -2,16 +2,17 @@ import * as React from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { User } from "../../models/user";
+import { ClientConfig } from "../../../jira-client/models/client-config";
 
-interface LoginProps {
-  error: any;
-  login: (user: User) => any;
+export interface Props {
+  error?: any;
+  login: (config: ClientConfig) => void;
 }
 
-const Login: React.FunctionComponent<LoginProps> = ({ error, login }) => {
+const Login: React.FunctionComponent<Props> = ({ error, login }) => {
   const [user, setUser] = React.useState({
-    email: "a",
+    url: "",
+    email: "",
     apiToken: ""
   });
 
@@ -22,13 +23,28 @@ const Login: React.FunctionComponent<LoginProps> = ({ error, login }) => {
     setUser({ ...user, apiToken: target.value });
   };
 
+  const onURLChange = ({ target }: any) => {
+    setUser({ ...user, url: target.value });
+  };
+
+  const onFormSubmit = () => login(user);
+
   return (
     <Card>
       <Card.Header className="text-center" as="h5">
         Sign In
       </Card.Header>
       <Card.Body>
-        <Form>
+        <Form onSubmit={onFormSubmit}>
+          <Form.Group>
+            <Form.Label>URL</Form.Label>
+            <Form.Control
+              value={user.url}
+              onChange={onURLChange}
+              type="text"
+              placeholder="Enter url"
+            />
+          </Form.Group>
           <Form.Group>
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -44,7 +60,7 @@ const Login: React.FunctionComponent<LoginProps> = ({ error, login }) => {
               value={user.apiToken}
               onChange={onTokenChange}
               type="text"
-              placeholder="Enter email"
+              placeholder="Enter api token"
             />
           </Form.Group>
           <Button variant="primary" type="submit">

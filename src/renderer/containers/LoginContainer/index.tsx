@@ -2,15 +2,16 @@ import * as React from "react";
 import Login from "../../components/Login/Login";
 import { RootState } from "../../reducer";
 import { connect } from "react-redux";
-import { LoginActions, login } from "./actions";
-import { User } from "../../models/user";
+import { LoginActions } from "./actions";
+import { authenticate } from "./authenticate";
+import { ClientConfig } from "../../../jira-client/models/client-config";
 
 const mapStateToProps = (state: RootState) => ({
   user: state.app.user
 });
 
 const mapDispatchToProps = (dispatch: React.Dispatch<LoginActions>) => ({
-  login: (user: User) => dispatch(login(user))
+  login: (config: ClientConfig) => dispatch(authenticate(config) as any)
 });
 
 export default connect(

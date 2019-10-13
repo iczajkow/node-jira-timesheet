@@ -1,6 +1,6 @@
-import { User } from "./models/user";
 import { Reducer } from "redux";
 import { AppActions, AppActionTypes } from "./appActions";
+import { User } from "jira-connector/api/user";
 
 export interface AppState {
   user: User;

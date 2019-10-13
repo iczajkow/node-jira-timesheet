@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { appReducer, AppState } from "./appReducer";
-import reducer, { LoginState } from "./containers/LoginContainer/reducer";
+import loginReducer, { LoginState } from "./containers/LoginContainer/reducer";
 
 export interface RootState {
   app: AppState;

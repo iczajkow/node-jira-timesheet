@@ -29,10 +29,6 @@
     "{src,test,mocks}/**/*.{js,ts,tsx,json,css,scss,md}": [
       "prettier --write",
       "git add"
-    ],
-    "{src,test,mocks}/**/*.{js,ts,tsx}": [
-      "tslint --project ./tsconfig.json --fix",
-      "git add"
     ]
   },
   "jest": {
@@ -148,6 +144,7 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
     "react-router-redux": "^4.0.8",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   }
 }

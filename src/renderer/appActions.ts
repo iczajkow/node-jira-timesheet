@@ -1,5 +1,5 @@
-import { User } from "./models/user";
 import { PayloadAction } from "./models/payloadAction";
+import { User } from "jira-connector/api/user";
 
 export enum AppActionTypes {
   SetUser = "APP_SET_USER"
