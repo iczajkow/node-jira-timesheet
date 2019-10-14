@@ -7,7 +7,9 @@ import { authenticate } from "./authenticate";
 import { ClientConfig } from "../../../jira-client/models/client-config";
 
 const mapStateToProps = (state: RootState) => ({
-  user: state.app.user
+  isLoggedIn: Boolean(state.app.user),
+  isLoggingIn: state.login.isLoggingIn,
+  error: state.login.error
 });
 
 const mapDispatchToProps = (dispatch: React.Dispatch<LoginActions>) => ({

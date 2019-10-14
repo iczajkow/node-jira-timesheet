@@ -11,3 +11,8 @@ export interface SetUserAction extends PayloadAction<User> {
 }
 
 export type AppActions = SetUserAction;
+
+export const setUser = (user: User) => ({
+  type: AppActionTypes.SetUser,
+  payload: { user }
+});

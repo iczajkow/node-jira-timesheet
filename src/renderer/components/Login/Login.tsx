@@ -2,14 +2,27 @@ import * as React from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import { ClientConfig } from "../../../jira-client/models/client-config";
+import { Redirect } from "react-router";
+import "./Login.scss";
 
 export interface Props {
   error?: any;
+  isLoggedIn?: boolean;
+  isLoggingIn?: boolean;
   login: (config: ClientConfig) => void;
 }
 
-const Login: React.FunctionComponent<Props> = ({ error, login }) => {
+const Login: React.FunctionComponent<Props> = ({
+  error,
+  isLoggedIn,
+  isLoggingIn,
+  login
+}) => {
+  if (isLoggedIn) {
+    return <Redirect to="/" />;
+  }
   const [user, setUser] = React.useState({
     url: "",
     email: "",
@@ -43,6 +56,7 @@ const Login: React.FunctionComponent<Props> = ({ error, login }) => {
               onChange={onURLChange}
               type="text"
               placeholder="Enter url"
+              required
             />
           </Form.Group>
           <Form.Group>
@@ -52,6 +66,7 @@ const Login: React.FunctionComponent<Props> = ({ error, login }) => {
               onChange={onEmailChange}
               type="email"
               placeholder="Enter email"
+              required
             />
           </Form.Group>
           <Form.Group>
@@ -61,11 +76,23 @@ const Login: React.FunctionComponent<Props> = ({ error, login }) => {
               onChange={onTokenChange}
               type="text"
               placeholder="Enter api token"
+              required
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Login
-          </Button>
+          <div className="login-button__wrapper">
+            <Button variant="primary" type="submit" disabled={isLoggingIn}>
+              {isLoggingIn && (
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              )}
+              <span>{isLoggingIn ? "Logginng in..." : "Login"}</span>
+            </Button>
+          </div>
         </Form>
       </Card.Body>
     </Card>

@@ -1,19 +1,27 @@
 import * as React from "react";
-import { Provider } from "react-redux";
-import store from "./store";
-import { Route } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 import { HashRouter } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import { appReducer } from "./appReducer";
+import Dashboard from "./pages/Dashboard";
+import { connect } from "react-redux";
+import { RootState } from "./reducer";
+import LoginRequiredRoute from "./LoginRequiredRoute";
 
-const a = appReducer;
+interface Props {
+  isLoggedIn?: boolean;
+}
 
-const routes = (
-  <Provider store={store}>
-    <HashRouter>
-      <Route path="/" component={LoginPage} />
-    </HashRouter>
-  </Provider>
+const mapToState = (state: RootState) => ({
+  isLoggedIn: Boolean(state.app.user)
+});
+
+const Routes: React.FunctionComponent<Props> = ({ isLoggedIn }) => (
+  <HashRouter>
+    <Switch>
+      <Route path="/login" component={LoginPage} />
+      <LoginRequiredRoute component={Dashboard} />
+    </Switch>
+  </HashRouter>
 );
 
-export default routes;
+export default connect(mapToState)(Routes);
