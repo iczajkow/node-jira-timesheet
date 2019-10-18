@@ -4,25 +4,19 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { ClientConfig } from "../../../jira-client/models/client-config";
-import { Redirect } from "react-router";
 import "./Login.scss";
 
 export interface Props {
   error?: any;
-  isLoggedIn?: boolean;
   isLoggingIn?: boolean;
   login: (config: ClientConfig) => void;
 }
 
 const Login: React.FunctionComponent<Props> = ({
   error,
-  isLoggedIn,
   isLoggingIn,
   login
 }) => {
-  if (isLoggedIn) {
-    return <Redirect to="/" />;
-  }
   const [user, setUser] = React.useState({
     url: "",
     email: "",

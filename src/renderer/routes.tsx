@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import { connect } from "react-redux";
 import { RootState } from "./reducer";
 import LoginRequiredRoute from "./LoginRequiredRoute";
+import LoginPageContainer from "./containers/LoginPageContainer";
 
 interface Props {
   isLoggedIn?: boolean;
@@ -18,7 +19,7 @@ const mapToState = (state: RootState) => ({
 const Routes: React.FunctionComponent<Props> = ({ isLoggedIn }) => (
   <HashRouter>
     <Switch>
-      <Route path="/login" component={LoginPage} />
+      <Route path="/login" component={LoginPageContainer} />
       <LoginRequiredRoute component={Dashboard} />
     </Switch>
   </HashRouter>
