@@ -1,6 +1,7 @@
 import { PayloadAction } from "../../models/payloadAction";
 import { ActionCreator, AnyAction } from "redux";
 import { User } from "jira-connector/api/user";
+import { ClientConfig } from "../../../jira-client/models/client-config";
 
 export enum LoginActionType {
   Login = "LOGIN_LOGIN",
@@ -9,8 +10,9 @@ export enum LoginActionType {
   LoadCachedUser = "LOGIN_LOAD_CACHED_USER"
 }
 
-export interface LoginAction extends AnyAction {
+export interface LoginAction extends PayloadAction<ClientConfig> {
   type: LoginActionType.Login;
+  payload: { clientConfig: ClientConfig };
 }
 
 export interface LoginSuccess extends PayloadAction<User> {
@@ -33,8 +35,11 @@ export type LoginActions =
   | LoginFailed
   | LoadCachedUser;
 
-export const login: ActionCreator<LoginAction> = () => ({
-  type: LoginActionType.Login
+export const login: ActionCreator<LoginAction> = (
+  clientConfig: ClientConfig
+) => ({
+  type: LoginActionType.Login,
+  payload: { clientConfig }
 });
 
 export const success: ActionCreator<LoginSuccess> = (user: User) => ({

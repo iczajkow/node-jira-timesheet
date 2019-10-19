@@ -5,6 +5,7 @@ import { ClientConfig } from "../../../jira-client/models/client-config";
 import Login from "../../components/Login/Login";
 import { Redirect } from "react-router";
 import { LoginError } from "../../containers/LoginPageContainer/login-error";
+import AppLoader from "../../components/AppLoader/AppLoader";
 
 export interface Props {
   error?: LoginError;
@@ -41,7 +42,7 @@ const LoginPage: React.FunctionComponent<Props> = ({
       <div className="row">
         <div className="col-9 mx-auto login__content">
           {isLoadingCachedUser || !initialized ? (
-            <div>Loading cached user</div>
+            <AppLoader />
           ) : (
             <Login login={login} error={error} isLoggingIn={isLoggingIn} />
           )}

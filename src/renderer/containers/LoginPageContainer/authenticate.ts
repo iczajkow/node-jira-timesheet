@@ -8,7 +8,7 @@ import { loginError } from "./login-error";
 
 export const authenticate = (config: ClientConfig) => {
   return (dispatch: any) => {
-    dispatch(login());
+    dispatch(login(config));
     ClientConfigStorage.saveClientConfig(config);
     const client = jiraClientProvider.createClient(config);
     return client.myself.getMyself().then(

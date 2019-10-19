@@ -1,15 +1,18 @@
 import { Reducer } from "redux";
 import { LoginActions, LoginActionType } from "./actions";
 import { LoginError } from "./login-error";
+import { ClientConfig } from "../../../jira-client/models/client-config";
 
 export interface LoginState {
   error: LoginError;
+  clientConfig: ClientConfig;
   isLoggingIn: boolean;
   isLoadingCachedUser: boolean;
 }
 
 const defaultState: LoginState = {
   error: null,
+  clientConfig: null,
   isLoggingIn: false,
   isLoadingCachedUser: false
 };
@@ -20,7 +23,11 @@ const loginReducer: Reducer<LoginState> = (
 ) => {
   switch (action.type) {
     case LoginActionType.Login:
-      return { ...state, isLoggingIn: true };
+      return {
+        ...state,
+        isLoggingIn: true,
+        clientConfig: action.payload.clientConfig
+      };
     case LoginActionType.LoginFailed:
       return {
         ...state,
