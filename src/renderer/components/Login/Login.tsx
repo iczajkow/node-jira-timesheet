@@ -3,11 +3,13 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 import { ClientConfig } from "../../../jira-client/models/client-config";
 import "./Login.scss";
+import { LoginError } from "../../containers/LoginPageContainer/login-error";
 
 export interface Props {
-  error?: any;
+  error?: LoginError;
   isLoggingIn?: boolean;
   login: (config: ClientConfig) => void;
 }
@@ -73,6 +75,7 @@ const Login: React.FunctionComponent<Props> = ({
               required
             />
           </Form.Group>
+          {error ? <Alert variant="danger">{error.message}</Alert> : null}
           <div className="login-button__wrapper">
             <Button variant="primary" type="submit" disabled={isLoggingIn}>
               {isLoggingIn && (

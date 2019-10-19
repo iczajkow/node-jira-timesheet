@@ -6,6 +6,7 @@ import { authenticate } from "./authenticate";
 import { ClientConfig } from "../../../jira-client/models/client-config";
 import LoginPage from "../../pages/LoginPage";
 import { ClientConfigStorage } from "./client-config-storage";
+import { valdiateClient } from "./client-validator";
 
 const mapStateToProps = (state: RootState) => ({
   isLoggedIn: Boolean(state.app.user),
@@ -17,8 +18,11 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: React.Dispatch<LoginActions>) => ({
   login: (config: ClientConfig) => dispatch(authenticate(config) as any),
   loadCachedUser: () => {
-    dispatch(loadCachedUser());
-    dispatch(authenticate(ClientConfigStorage.loadClientConfig()) as any);
+    const client = ClientConfigStorage.loadClientConfig();
+    if (valdiateClient(client)) {
+      dispatch(loadCachedUser());
+      dispatch(authenticate(client) as any);
+    }
   }
 });
 

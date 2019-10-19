@@ -1,8 +1,9 @@
 import { Reducer } from "redux";
 import { LoginActions, LoginActionType } from "./actions";
+import { LoginError } from "./login-error";
 
 export interface LoginState {
-  error: any;
+  error: LoginError;
   isLoggingIn: boolean;
   isLoadingCachedUser: boolean;
 }
@@ -19,7 +20,7 @@ const loginReducer: Reducer<LoginState> = (
 ) => {
   switch (action.type) {
     case LoginActionType.Login:
-      return { ...state, isLoggingIn: true, isLoadingCachedUser: false };
+      return { ...state, isLoggingIn: true };
     case LoginActionType.LoginFailed:
       return {
         ...state,

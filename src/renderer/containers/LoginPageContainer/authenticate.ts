@@ -4,6 +4,7 @@ import { ClientConfig } from "../../../jira-client/models/client-config";
 import { User } from "jira-connector/api/user";
 import { setUser } from "../../appActions";
 import { ClientConfigStorage } from "./client-config-storage";
+import { loginError } from "./login-error";
 
 export const authenticate = (config: ClientConfig) => {
   return (dispatch: any) => {
@@ -15,7 +16,7 @@ export const authenticate = (config: ClientConfig) => {
         dispatch(success(user));
         dispatch(setUser(user));
       },
-      (error: any) => dispatch(failed(error))
+      (error: any) => dispatch(failed(loginError(error)))
     );
   };
 };

@@ -4,9 +4,10 @@ import "./index.scss";
 import { ClientConfig } from "../../../jira-client/models/client-config";
 import Login from "../../components/Login/Login";
 import { Redirect } from "react-router";
+import { LoginError } from "../../containers/LoginPageContainer/login-error";
 
 export interface Props {
-  error?: any;
+  error?: LoginError;
   isLoggedIn?: boolean;
   isLoggingIn?: boolean;
   isLoadingCachedUser?: boolean;
@@ -26,13 +27,24 @@ const LoginPage: React.FunctionComponent<Props> = ({
     return <Redirect to="/" />;
   }
 
-  useEffect(() => loadCachedUser());
+  const [initialized, setInitialized] = React.useState(false);
+
+  useEffect(() => {
+    if (!error && !isLoadingCachedUser && !isLoggingIn) {
+      loadCachedUser();
+      setInitialized(true);
+    }
+  });
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-9 mx-auto login__content">
-          <Login login={login} error={error} isLoggingIn={isLoggingIn} />
+          {isLoadingCachedUser || !initialized ? (
+            <div>Loading cached user</div>
+          ) : (
+            <Login login={login} error={error} isLoggingIn={isLoggingIn} />
+          )}
         </div>
       </div>
     </div>
