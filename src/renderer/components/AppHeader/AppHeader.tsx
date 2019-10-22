@@ -26,7 +26,7 @@ const AppHeader: React.FunctionComponent<PropsWithChildren<Props>> = ({
         />
         <span>{user.displayName}</span>
       </Navbar.Brand>
-      <div>{children}</div>
+      <div className="content__wrapper">{children}</div>
       <Button
         className="ml-auto"
         variant="outline-secondary"

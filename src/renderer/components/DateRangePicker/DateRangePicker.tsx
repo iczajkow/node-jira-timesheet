@@ -3,32 +3,33 @@ import { useState } from "react";
 
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import { DateRangeModel } from "./DateRangeModel";
+import "./DateRangePicker.scss";
+import { RangeModifier } from "react-day-picker/types/common";
 
 interface Props {
-  initDateRange?: DateRangeModel;
-  onDateRangeChange?: (value: DateRangeModel) => void;
+  range?: RangeModifier;
+  onDateRangeChange?: (value: RangeModifier) => void;
 }
 
 const DateRangePicker: React.FunctionComponent<Props> = ({
-  initDateRange,
+  range,
   onDateRangeChange
 }) => {
   let toDatePicker: any = undefined;
 
   const [dateRange, setRange] = useState({
-    from: initDateRange && initDateRange.from,
-    to: initDateRange && initDateRange.to
+    from: range && range.from,
+    to: range && range.to
   });
 
   const handleFromChange = (from: any) => {
     setRange({ ...dateRange, from });
-    onDateRangeChange && onDateRangeChange(dateRange);
+    onDateRangeChange && onDateRangeChange({ ...dateRange, from });
   };
 
   const handleToChange = (to: any) => {
     setRange({ ...dateRange, to });
-    onDateRangeChange && onDateRangeChange(dateRange);
+    onDateRangeChange && onDateRangeChange({ ...dateRange, to });
   };
 
   const modifiers = { start: dateRange.from, end: dateRange.to };
@@ -38,7 +39,7 @@ const DateRangePicker: React.FunctionComponent<Props> = ({
       <DayPickerInput
         value={dateRange.from}
         placeholder="From"
-        format="LL"
+        format="dd.MM.yyyy"
         dayPickerProps={{
           selectedDays: [dateRange.from, dateRange],
           disabledDays: { after: dateRange.to },
@@ -49,7 +50,7 @@ const DateRangePicker: React.FunctionComponent<Props> = ({
         }}
         onDayChange={handleFromChange}
       />
-      —
+      <span className="date-range__space">-</span>
       <span className="InputFromTo-to">
         <DayPickerInput
           ref={el => (toDatePicker = el)}
