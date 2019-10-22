@@ -11,18 +11,20 @@ import { LoginError } from "../../containers/LoginPageContainer/login-error";
 export interface Props {
   error?: LoginError;
   isLoggingIn?: boolean;
+  clientConfig?: ClientConfig;
   login: (config: ClientConfig) => void;
 }
 
 const Login: React.FunctionComponent<Props> = ({
   error,
   isLoggingIn,
+  clientConfig,
   login
 }) => {
   const [user, setUser] = React.useState({
-    url: "",
-    email: "",
-    apiToken: ""
+    url: (clientConfig && clientConfig.url) || "",
+    email: (clientConfig && clientConfig.email) || "",
+    apiToken: (clientConfig && clientConfig.apiToken) || ""
   });
 
   const onEmailChange = ({ target }: any) =>

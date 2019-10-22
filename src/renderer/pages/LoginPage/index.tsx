@@ -10,6 +10,7 @@ import AppLoader from "../../components/AppLoader/AppLoader";
 export interface Props {
   error?: LoginError;
   isLoggedIn?: boolean;
+  clientConfig?: ClientConfig;
   isLoggingIn?: boolean;
   isLoadingCachedUser?: boolean;
   login: (config: ClientConfig) => void;
@@ -19,6 +20,7 @@ export interface Props {
 const LoginPage: React.FunctionComponent<Props> = ({
   error,
   isLoggedIn,
+  clientConfig,
   isLoggingIn,
   isLoadingCachedUser,
   login,
@@ -42,9 +44,14 @@ const LoginPage: React.FunctionComponent<Props> = ({
       <div className="row">
         <div className="col-9 mx-auto login__content">
           {isLoadingCachedUser || !initialized ? (
-            <AppLoader />
+            <AppLoader clientConfig={clientConfig} />
           ) : (
-            <Login login={login} error={error} isLoggingIn={isLoggingIn} />
+            <Login
+              login={login}
+              error={error}
+              isLoggingIn={isLoggingIn}
+              clientConfig={clientConfig}
+            />
           )}
         </div>
       </div>

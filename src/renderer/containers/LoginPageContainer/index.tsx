@@ -12,6 +12,7 @@ const mapStateToProps = (state: RootState) => ({
   isLoggedIn: Boolean(state.app.user),
   isLoggingIn: state.login.isLoggingIn,
   isLoadingCachedUser: state.login.isLoadingCachedUser,
+  clientConfig: state.login.clientConfig,
   error: state.login.error
 });
 
