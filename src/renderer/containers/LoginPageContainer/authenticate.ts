@@ -1,10 +1,10 @@
 import { login, failed, success } from "./actions";
 import jiraClientProvider from "../../jira-client-provider";
 import { ClientConfig } from "../../../jira-client/models/client-config";
-import { User } from "jira-connector/api/user";
 import { setUser } from "../../appActions";
 import { ClientConfigStorage } from "./client-config-storage";
 import { loginError } from "./login-error";
+import { User } from "../../../jira-client/models/user";
 
 export const authenticate = (config: ClientConfig) => {
   return (dispatch: any) => {

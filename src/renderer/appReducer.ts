@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 import { AppActions, AppActionTypes } from "./appActions";
-import { User } from "jira-connector/api/user";
+import { User } from "../jira-client/models/user";
 
 export interface AppState {
   user: User;
@@ -17,6 +17,8 @@ export const appReducer: Reducer<AppState> = (
   switch (action.type) {
     case AppActionTypes.SetUser:
       return { ...state, user: action.payload.user };
+    case AppActionTypes.ClearUser:
+      return { ...state, user: null };
     default:
       return state;
   }

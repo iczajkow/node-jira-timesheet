@@ -28,7 +28,12 @@ const loadClientConfig = (): ClientConfig => {
   };
 };
 
+const clearUser = () => {
+  localStorage.clear();
+};
+
 export const ClientConfigStorage = {
   saveClientConfig,
-  loadClientConfig
+  loadClientConfig,
+  clearUser
 };
