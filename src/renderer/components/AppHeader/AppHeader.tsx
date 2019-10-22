@@ -3,13 +3,19 @@ import Navbar from "react-bootstrap/Navbar";
 import { User } from "../../../jira-client/models/user";
 import "./AppHeader.scss";
 import Button from "react-bootstrap/Button";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { PropsWithChildren } from "react";
 
 interface Props {
   user?: User;
   logout?: () => void;
 }
 
-const AppHeader: React.FunctionComponent<Props> = ({ user, logout }) => {
+const AppHeader: React.FunctionComponent<PropsWithChildren<Props>> = ({
+  user,
+  logout,
+  children
+}) => {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>
@@ -20,7 +26,13 @@ const AppHeader: React.FunctionComponent<Props> = ({ user, logout }) => {
         />
         <span>{user.displayName}</span>
       </Navbar.Brand>
-      <Button variant="outline-secondary" onClick={logout}>
+      <div>{children}</div>
+      <Button
+        className="ml-auto"
+        variant="outline-secondary"
+        size="sm"
+        onClick={logout}
+      >
         Logout
       </Button>
     </Navbar>
