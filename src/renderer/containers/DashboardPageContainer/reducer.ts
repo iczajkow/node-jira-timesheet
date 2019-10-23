@@ -1,12 +1,18 @@
 import { Reducer } from "redux";
 import { DashboardActions, DashboardActionType } from "./actions";
+import { WorklogData } from "../../models/worklog-data";
+import { RangeModifier } from "react-day-picker";
 
 export interface DashboardState {
+  searchRange: RangeModifier;
   isSearching: boolean;
+  worklogData: WorklogData[];
 }
 
 const defaultState: DashboardState = {
-  isSearching: false
+  searchRange: null,
+  isSearching: false,
+  worklogData: null
 };
 
 const dashboardReducer: Reducer<DashboardState> = (
@@ -15,7 +21,13 @@ const dashboardReducer: Reducer<DashboardState> = (
 ) => {
   switch (action.type) {
     case DashboardActionType.Search:
-      return { ...state, isSearching: true };
+      return { ...state, isSearching: true, searchRange: action.payload.range };
+    case DashboardActionType.SearchCompleted:
+      return {
+        ...state,
+        isSearching: false,
+        worklogData: action.payload.worklogData
+      };
     default:
       return state;
   }

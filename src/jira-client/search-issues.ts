@@ -1,4 +1,4 @@
-import JiraClient = require("jira-connector");
+import * as JiraClient from "jira-connector";
 import { toJiraDateFormat } from "../utils/date-utils";
 import { IssuesResponse } from "./models/issues-response";
 

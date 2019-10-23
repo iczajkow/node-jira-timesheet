@@ -1,4 +1,4 @@
-import JiraClient = require("jira-connector");
+import * as JiraClient from "jira-connector";
 import { IssueWorklog } from "./models/issue-worklog";
 import { Worklog } from "./models/worklog";
 import { IssueResponse } from "./models/issues-response";
