@@ -29,7 +29,10 @@ export const loginError = (error: any): LoginError => {
   const errorObject = typeof error === "string" ? JSON.parse(error) : error;
   if (errorObject.code === ErrorCode.HostNotFound) {
     return hostNotFound(errorObject);
-  } else if (errorObject.statusCode.toString() === ErrorCode.Unauthorized) {
+  } else if (
+    errorObject.statusCode &&
+    errorObject.statusCode.toString() === ErrorCode.Unauthorized
+  ) {
     return unauthorized(errorObject);
   }
   return unknown(errorObject);
