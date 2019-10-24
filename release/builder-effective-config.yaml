@@ -1,0 +1,17 @@
+directories:
+  output: release
+  buildResources: build
+productName: Jira Timesheet
+appId: org.igczajkow.jiraTimesheet
+mac:
+  category: igczajkow.jiraTimesheet.timesheet.jira
+files:
+  - filter:
+      - dist/
+      - node_modules/
+      - package.json
+linux:
+  target: deb
+win:
+  target: nsis
+electronVersion: 3.1.9
