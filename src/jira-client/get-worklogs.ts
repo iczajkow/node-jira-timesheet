@@ -17,14 +17,23 @@ export const getWorklogs = async ({
   jiraClient,
   userName
 }: WorklogClientInput) => {
-  const issuesResponse = await searchIssues(jiraClient, from, to, userName);
+  const searchTo = moment(to)
+    .add(1, "day")
+    .toDate();
+  const issuesResponse = await searchIssues(
+    jiraClient,
+    from,
+    searchTo,
+    userName
+  );
 
   const worklogs = await getIssueWorklogs(
     issuesResponse.issues,
     jiraClient,
-    worklog => filterWorklog(worklog, userName, from, to)
+    worklog => filterWorklog(worklog, userName, from, searchTo)
   );
 
+  console.log(worklogs);
   return worklogs;
 };
 
@@ -34,6 +43,9 @@ const filterWorklog = (
   from: Date,
   to: Date
 ) => {
-  const isBetween = moment(worklog.started).isBetween(moment(from), moment(to));
+  const momentStarted = moment(worklog.started);
+  const isBetween =
+    momentStarted.isSameOrAfter(moment(from)) &&
+    momentStarted.isSameOrBefore(moment(to));
   return worklog.author.displayName === name && isBetween;
 };
