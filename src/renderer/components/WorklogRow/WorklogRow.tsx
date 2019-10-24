@@ -9,7 +9,14 @@ const WorklogRow: React.FunctionComponent<{ row?: Row }> = ({ row }) => {
     <tr key={row.date.toISOString()}>
       <td>{moment(row.date).format("DD.MM.YYYY")}</td>
       <td>{displayDuration}</td>
-      <td>{JSON.stringify(row.issues)}</td>
+      <td>
+        {row.issues.map(issue => (
+          <div>
+            <span>{issue.key} - </span>
+            <span>{formatDuration(issue.time)}</span>
+          </div>
+        ))}
+      </td>
     </tr>
   );
 };
