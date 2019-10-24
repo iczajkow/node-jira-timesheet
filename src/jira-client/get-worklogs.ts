@@ -33,7 +33,6 @@ export const getWorklogs = async ({
     worklog => filterWorklog(worklog, userName, from, searchTo)
   );
 
-  console.log(worklogs);
   return worklogs;
 };
 

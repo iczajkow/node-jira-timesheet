@@ -1,7 +1,7 @@
 import * as React from "react";
 import Table from "react-bootstrap/Table";
-import * as moment from "moment";
 import { Row } from "../../models/row";
+import WorklogRow from "../WorklogRow/WorklogRow";
 
 const WorklogTable: React.FunctionComponent<{ rows?: Row[] }> = ({ rows }) => {
   return (
@@ -15,17 +15,7 @@ const WorklogTable: React.FunctionComponent<{ rows?: Row[] }> = ({ rows }) => {
       </thead>
       <tbody>
         {rows.map(row => {
-          const hours = Math.floor(row.total / 3600);
-          const minutes = Math.floor((row.total / 60) % 60);
-          const stringMinutes = minutes < 10 ? `0${minutes}` : minutes;
-          const displayDuration = `${hours}:${stringMinutes}`;
-          return (
-            <tr key={row.date.toISOString()}>
-              <td>{moment(row.date).format("DD.MM.YYYY")}</td>
-              <td>{displayDuration}</td>
-              <td>{JSON.stringify(row.issues)}</td>
-            </tr>
-          );
+          return <WorklogRow key={row.date.toISOString()} row={row} />;
         })}
       </tbody>
     </Table>
