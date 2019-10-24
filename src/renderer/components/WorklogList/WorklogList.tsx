@@ -2,47 +2,48 @@ import * as React from "react";
 import { WorklogData } from "../../models/worklog-data";
 import { RangeModifier } from "react-day-picker";
 import * as moment from "moment";
+import { getDatesBetween } from "./dates-between";
+import "./WorklogList.scss";
+import WorklogTable from "../WorklogTable/WorklogTable";
+import { Row } from "../../models/row";
 
 interface Props {
   range?: RangeModifier;
   worklogs?: WorklogData[];
 }
 
-const getDatesBetween = (range: RangeModifier): Date[] => {
-  const from = moment(range.from).startOf("day");
-  const to = moment(range.to).startOf("day");
-  const result: Date[] = [];
-  if (from.isAfter(to)) {
-    return result;
+const getRows = (range: RangeModifier, worklogs: WorklogData[]): Row[] => {
+  if (!range || !worklogs) {
+    return [];
   }
-  let currentDate = from;
-  while (currentDate.isSameOrBefore(to)) {
-    result.push(currentDate.toDate());
-    currentDate = currentDate.add(1, "day");
-  }
-  return result;
-};
 
-const getRows = (
-  range: RangeModifier,
-  worklogs: WorklogData[],
-  issueKeys: string[]
-) => {
-  if (range) {
-    console.log(getDatesBetween(range));
-  }
+  const dates = getDatesBetween(range);
+  return dates.map(date => {
+    const issuesForDate = worklogs.filter(worklog =>
+      moment(worklog.day).isSame(moment(date), "day")
+    );
+    return issuesForDate.reduce(
+      (previousValue: Row, currentValue: WorklogData) => {
+        return {
+          ...previousValue,
+          total: previousValue.total + currentValue.timeSpentSeconds,
+          issues: [
+            ...previousValue.issues,
+            { key: currentValue.issueKey, time: currentValue.timeSpentSeconds }
+          ]
+        };
+      },
+      { date: date, total: 0, issues: [] }
+    );
+  });
 };
 
 const WorklogList: React.FunctionComponent<Props> = ({ worklogs, range }) => {
-  const uniqueIssues = (worklogs || [])
-    .map(worklog => worklog.issueKey)
-    .filter((worklog, index, array) => array.indexOf(worklog) === index);
-  console.log(uniqueIssues);
-  getRows(range, worklogs, uniqueIssues);
+  const rows = getRows(range, worklogs);
   return (
-    <pre>
-      {worklogs ? JSON.stringify(worklogs, null, 4) : "Nothing to show"}
-    </pre>
+    <div className="worklog__list">
+      {worklogs ? <WorklogTable rows={rows} /> : "Nothing to show"}
+    </div>
   );
 };
 

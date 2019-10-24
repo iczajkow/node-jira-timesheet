@@ -5,15 +5,12 @@ import * as moment from "moment";
 export const mapWoklogIssues = (
   issueWorklogs: IssueWorklog[]
 ): WorklogData[] => {
-  const result: WorklogData[] = [];
-  issueWorklogs.forEach(issueWorklog => {
-    issueWorklog.worklogs.forEach(worklog => {
-      result.push({
-        day: moment(worklog.started).toDate(),
-        issueKey: issueWorklog.issueKey,
-        timeSpentSeconds: worklog.timeSpentSeconds
-      });
-    });
-  });
-  return result;
+  return issueWorklogs.reduce((worklogs, issueWorklog) => {
+    const issueWorklogs = issueWorklog.worklogs.map(worklog => ({
+      day: moment(worklog.started).toDate(),
+      issueKey: issueWorklog.issueKey,
+      timeSpentSeconds: worklog.timeSpentSeconds
+    }));
+    return [...worklogs, ...issueWorklogs];
+  }, []);
 };

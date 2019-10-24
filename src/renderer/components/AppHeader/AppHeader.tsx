@@ -17,7 +17,7 @@ const AppHeader: React.FunctionComponent<PropsWithChildren<Props>> = ({
   children
 }) => {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="app__header" bg="light" expand="lg">
       <Navbar.Brand>
         <img
           className="user__avatar"

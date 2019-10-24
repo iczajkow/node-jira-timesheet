@@ -8,24 +8,21 @@ export interface WorklogClientInput {
   from: Date;
   to: Date;
   jiraClient: JiraClient;
+  userName: string;
 }
 
 export const getWorklogs = async ({
   from,
   to,
-  jiraClient
+  jiraClient,
+  userName
 }: WorklogClientInput) => {
-  const issuesResponse = await searchIssues(
-    jiraClient,
-    from,
-    to,
-    "Igor Czajkowski"
-  );
+  const issuesResponse = await searchIssues(jiraClient, from, to, userName);
 
   const worklogs = await getIssueWorklogs(
     issuesResponse.issues,
     jiraClient,
-    worklog => filterWorklog(worklog, "Igor Czajkowski", from, to)
+    worklog => filterWorklog(worklog, userName, from, to)
   );
 
   return worklogs;
