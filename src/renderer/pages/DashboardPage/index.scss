@@ -2,11 +2,14 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .dashboard__content {
   flex: 1 0 auto;
   display: flex;
+  overflow: auto;
+  max-height: calc(100% - 60px);
 }
 
 .dashboard__spinner {

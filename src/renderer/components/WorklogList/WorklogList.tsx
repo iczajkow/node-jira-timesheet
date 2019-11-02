@@ -14,7 +14,11 @@ const WorklogList: React.FunctionComponent<Props> = ({ worklogs, range }) => {
   const rows = getRows(range, worklogs);
   return (
     <div className="worklog__list">
-      {worklogs ? <WorklogTable rows={rows} /> : "Nothing to show"}
+      {worklogs ? (
+        <WorklogTable rows={rows} />
+      ) : (
+        <h2 className="worklog__empty">Nothing to show</h2>
+      )}
     </div>
   );
 };

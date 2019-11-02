@@ -16,6 +16,8 @@ interface Props {
   worklogData?: WorklogData[];
   logout?: () => void;
   search?: (range: RangeModifier) => void;
+  clear?: () => void;
+  cancel?: () => void;
 }
 
 const DashboardPage: React.FunctionComponent<Props> = ({
@@ -24,12 +26,19 @@ const DashboardPage: React.FunctionComponent<Props> = ({
   searchRange,
   worklogData,
   logout,
-  search
+  search,
+  clear,
+  cancel
 }) => {
   return (
     <div className="dashboard__page">
       <AppHeader user={user} logout={logout}>
-        <WorklogSearch search={search} isSearching={isSearching} />
+        <WorklogSearch
+          search={search}
+          isSearching={isSearching}
+          clear={clear}
+          cancel={cancel}
+        />
       </AppHeader>
       <div className="dashboard__content">
         {isSearching ? (

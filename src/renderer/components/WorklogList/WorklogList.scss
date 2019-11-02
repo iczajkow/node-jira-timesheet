@@ -1,3 +1,9 @@
 .worklog__list {
   width: 100%;
+  display: flex;
+}
+
+.worklog__empty {
+  margin: auto;
+  text-align: center;
 }

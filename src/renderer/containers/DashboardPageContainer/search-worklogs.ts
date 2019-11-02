@@ -16,8 +16,11 @@ export const searchWorklogs = (range: RangeModifier) => {
       to: range.to,
       jiraClient: client,
       userName: user.displayName
-    }).then((worklogs: IssueWorklog[]) =>
-      dispatch(dashboardSearchCompleted(mapWoklogIssues(worklogs)))
-    );
+    }).then((worklogs: IssueWorklog[]) => {
+      const isSearching = getState().dashboard.isSearching;
+      if (isSearching) {
+        return dispatch(dashboardSearchCompleted(mapWoklogIssues(worklogs)));
+      }
+    });
   };
 };

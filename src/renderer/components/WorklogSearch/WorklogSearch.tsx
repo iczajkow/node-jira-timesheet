@@ -9,12 +9,16 @@ interface Props {
   isSearching?: boolean;
   dateRange?: RangeModifier;
   search?: (dateRange: RangeModifier) => void;
+  clear?: () => void;
+  cancel?: () => void;
 }
 
 const WorklogSearch: React.FunctionComponent<Props> = ({
   isSearching,
   dateRange,
-  search
+  search,
+  clear,
+  cancel
 }) => {
   const [searchRange, setSearchRange] = React.useState({
     from: dateRange && dateRange.from,
@@ -25,6 +29,14 @@ const WorklogSearch: React.FunctionComponent<Props> = ({
     search(searchRange);
   };
 
+  const onCancel = () => {
+    if (isSearching) {
+      cancel();
+    } else {
+      clear();
+    }
+  };
+
   const canSearch = searchRange.from && searchRange.to && !isSearching;
 
   return (
@@ -32,23 +44,28 @@ const WorklogSearch: React.FunctionComponent<Props> = ({
       <div className="worklog-search__date-range">
         <DateRangePicker range={dateRange} onDateRangeChange={setSearchRange} />
       </div>
-      <Button
-        variant="outline-success"
-        size="sm"
-        disabled={!canSearch}
-        onClick={onSearch}
-      >
-        {isSearching && (
-          <Spinner
-            as="span"
-            animation="grow"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          />
-        )}
-        <span>{isSearching ? "Searching..." : "Search"}</span>
-      </Button>
+      <div className="worklog-search__buttons">
+        <Button
+          variant="outline-success"
+          size="sm"
+          disabled={!canSearch}
+          onClick={onSearch}
+        >
+          {isSearching && (
+            <Spinner
+              as="span"
+              animation="grow"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          )}
+          <span>{isSearching ? "Searching..." : "Search"}</span>
+        </Button>
+        <Button variant="outline-danger" size="sm" onClick={onCancel}>
+          {isSearching ? "Cancel" : "Clear"}
+        </Button>
+      </div>
     </div>
   );
 };

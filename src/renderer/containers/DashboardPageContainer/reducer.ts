@@ -28,6 +28,17 @@ const dashboardReducer: Reducer<DashboardState> = (
         isSearching: false,
         worklogData: action.payload.worklogData
       };
+    case DashboardActionType.Clear:
+      return {
+        ...state,
+        worklogData: null
+      };
+    case DashboardActionType.Cancel:
+      return {
+        ...state,
+        worklogData: null,
+        isSearching: false
+      };
     default:
       return state;
   }

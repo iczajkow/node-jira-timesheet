@@ -20,8 +20,8 @@ const WorklogRow: React.FunctionComponent<{ row?: Row }> = ({ row }) => {
       <td>{moment(row.date).format("dddd DD.MM.YYYY")}</td>
       <td>{displayDuration}</td>
       <td>
-        {row.issues.map(issue => (
-          <div key={issue.key}>
+        {row.issues.map((issue, index) => (
+          <div key={`${issue.key}_${index}`}>
             <span>{issue.key} - </span>
             <span>{formatDuration(issue.time)}</span>
           </div>

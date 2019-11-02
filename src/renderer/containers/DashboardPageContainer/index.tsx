@@ -5,6 +5,7 @@ import * as React from "react";
 import { logout } from "../../appActions";
 import { RangeModifier } from "react-day-picker/types/common";
 import { searchWorklogs } from "./search-worklogs";
+import { dashboardCancel, dashboardClear } from "./actions";
 
 const mapStateToProps = (state: RootState) => ({
   user: state.app.user,
@@ -15,7 +16,9 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: React.Dispatch<any>) => ({
   logout: () => dispatch(logout()),
-  search: (range: RangeModifier) => dispatch(searchWorklogs(range))
+  search: (range: RangeModifier) => dispatch(searchWorklogs(range)),
+  clear: () => dispatch(dashboardClear()),
+  cancel: () => dispatch(dashboardCancel())
 });
 
 export default connect(
