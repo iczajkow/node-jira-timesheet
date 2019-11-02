@@ -27,13 +27,9 @@ export const getWorklogs = async ({
     userName
   );
 
-  const worklogs = await getIssueWorklogs(
-    issuesResponse.issues,
-    jiraClient,
-    worklog => filterWorklog(worklog, userName, from, searchTo)
+  return await getIssueWorklogs(issuesResponse.issues, jiraClient, worklog =>
+    filterWorklog(worklog, userName, from, searchTo)
   );
-
-  return worklogs;
 };
 
 const filterWorklog = (
