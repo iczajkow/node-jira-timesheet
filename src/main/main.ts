@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
 import * as url from "url";
+import { setMenu } from "./menu";
 
 let win: BrowserWindow | null;
 
@@ -30,7 +31,7 @@ const createWindow = async () => {
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "1";
     win.loadURL(`http://localhost:2003`);
   } else {
-    win.setMenu(null);
+    setMenu();
     win.loadURL(
       url.format({
         pathname: path.join(__dirname, "index.html"),
